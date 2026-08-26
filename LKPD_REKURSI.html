@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKPD Digital Interaktif - Rekursi C++ (Informatika Fase F)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #e0f2fe;
+            --secondary: #0f172a;
+            --secondary-light: #1e293b;
+            --accent: #38bdf8;
+            --success: #16a34a;
+            --wa-green: #25d366;
+            --wa-dark: #128c7e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #cbd5e1;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 14px 14px 20px 14px;
+        }
+
+        /* Top App Bar Header */
+        .top-navbar {
+            background: #0f172a;
+            color: #ffffff;
+            padding: 10px 18px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .nav-status {
+            font-size: 11px;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+
+        /* Card / Section Structure */
+        .sheet-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 22px 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        /* Cover Section */
+        .cover-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0369a1 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 28px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.2);
+        }
+
+        .badge-cover {
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .cover-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 4px;
+        }
+
+        .cover-subtitle {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .topic-pill {
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 4px solid var(--accent);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            color: #e2e8f0;
+            line-height: 1.45;
+        }
+
+        /* Section Badges */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 6px;
+            margin-bottom: 14px;
+        }
+
+        .section-badge {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            padding: 3px 9px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .activity-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 14px 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .activity-title span {
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        /* Form Inputs */
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--secondary-light);
+            margin-bottom: 4px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            font-family: inherit;
+            font-size: 13px;
+            color: var(--text-main);
+            background-color: #f8fafc;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        textarea.form-control {
+            min-height: 75px;
+            resize: vertical;
+        }
+
+        .input-inline {
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 5px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #0369a1;
+            font-weight: 600;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .input-inline:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #f0f9ff;
+        }
+
+        /* Tables Responsive Container */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 8px 0 14px 0;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        table.interactive-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            min-width: 520px;
+        }
+
+        table.interactive-table th, 
+        table.interactive-table td {
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        table.interactive-table th {
+            background-color: var(--secondary);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table.interactive-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .center {
+            text-align: center !important;
+        }
+
+        /* Radio Group Alignment Fix */
+        .radio-center {
+            text-align: center !important;
+            vertical-align: middle !important;
+            padding: 6px 0 !important;
+        }
+
+        .radio-center input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            margin: 0 auto;
+            display: inline-block;
+        }
+
+        /* Code Blocks & IDE Editor */
+        .code-block {
+            background-color: #0f172a;
+            color: #f8fafc;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            line-height: 1.45;
+            margin: 8px 0;
+            border: 1px solid #334155;
+            overflow-x: auto;
+        }
+
+        .kw { color: #38bdf8; font-weight: 600; }
+        .type { color: #f43f5e; }
+        .str { color: #4ade80; }
+        .comment { color: #94a3b8; font-style: italic; }
+        .num { color: #fbbf24; }
+
+        .ide-editor {
+            width: 100%;
+            min-height: 280px;
+            background: #090d16;
+            color: #38bdf8;
+            font-family: 'JetBrains Mono', Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1.5px solid #334155;
+            resize: vertical;
+        }
+
+        .ide-editor:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Callouts */
+        .callout {
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 10px 0;
+            font-size: 12.5px;
+        }
+
+        .callout-blue {
+            background-color: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            color: #0369a1;
+        }
+
+        .callout-amber {
+            background-color: #fffbeb;
+            border-left: 4px solid var(--warning);
+            color: #92400e;
+        }
+
+        .check-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 0;
+            cursor: pointer;
+            font-size: 12.5px;
+        }
+
+        .check-container input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        /* Panel Aksi Bawah */
+        .control-panel {
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 18px 16px;
+            margin: 24px 0 10px 0;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-panel-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .btn {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-wa {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+            grid-column: 1 / -1;
+            font-size: 13.5px;
+            padding: 12px;
+        }
+
+        .btn-wa:hover, .btn-wa:active {
+            background: linear-gradient(135deg, #2ee06e, #0e786b);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary { background: var(--primary); color: #ffffff; }
+        .btn-secondary { background: rgba(255, 255, 255, 0.12); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .btn-danger { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .btn-danger:hover { background: #dc2626; color: white; }
+
+        @media (max-width: 640px) {
+            .container { padding: 10px 8px; }
+            .cover-title { font-size: 18px; }
+            .cover-header { padding: 18px 14px; }
+            .sheet-card { padding: 16px 12px; }
+            .btn-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .top-navbar, .control-panel, .no-print { display: none !important; }
+            .sheet-card { box-shadow: none; border: 1px solid #cbd5e1; margin-bottom: 20px; page-break-inside: avoid; }
+            .form-control, .input-inline { border-color: #94a3b8; background: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP APP BAR -->
+    <header class="top-navbar no-print">
+        <div class="nav-brand">
+            <span>💻 LKPD Informatika Fase F</span>
+        </div>
+        <div class="nav-status" id="save-status">
+            <span>●</span> <span>Tersimpan Otomatis</span>
+        </div>
+    </header>
+
+    <div class="container" id="lkpd-form">
+
+        <!-- COVER & IDENTITAS -->
+        <div class="cover-header">
+            <span class="badge-cover">LEMBAR KERJA PESERTA DIDIK (LKPD)</span>
+            <h1 class="cover-title">REKURSI: KONVERSI DESIMAL KE BINER DENGAN C++</h1>
+            <div class="cover-subtitle">Informatika Fase F &bull; SMA Negeri 1 Muncar</div>
+            
+            <div class="topic-pill">
+                <strong>🎯 Tujuan Pembelajaran:</strong> Peserta didik mampu memahami konsep rekursi (*call stack*) dan menerapkannya dalam program C++ untuk melakukan konversi bilangan desimal ke biner secara mandiri dan terstruktur.
+            </div>
+        </div>
+
+        <div class="sheet-card">
+            <div class="section-header">
+                <span class="section-badge">IDENTITAS SISWA &amp; KELOMPOK</span>
+                <span style="font-size: 11.5px; color: var(--text-muted);">Lengkapi Identitas</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+                <div class="input-group">
+                    <label>Nama Lengkap Peserta Didik <span style="color:red;">*</span></label>
+                    <input type="text" class="form-control" name="nama_siswa" placeholder="Ketik nama lengkap...">
+                </div>
+                <div class="input-group">
+                    <label>Kelas <span style="color:red;">*</span></label>
+                    <input type="text" class="form-control" name="kelas" placeholder="Contoh: X-1 / X-A">
+                </div>
+                <div class="input-group">
+                    <label>Nomor Absen <span style="color:red;">*</span></label>
+                    <input type="text" class="form-control" name="no_absen" placeholder="Contoh: 14">
+                </div>
+                <div class="input-group">
+                    <label>Nama / Nomor Kelompok</label>
+                    <input type="text" class="form-control" name="kelompok" placeholder="Contoh: Kelompok 3">
+                </div>
+            </div>
+        </div>
+
+        <!-- BAGIAN 1: PETUNJUK & KONSEP DASAR -->
+        <div class="sheet-card">
+            <div class="section-header">
+                <span class="section-badge">BAGIAN 1: PETUNJUK &amp; KONSEP DASAR</span>
+                <span style="font-size: 11.5px; color: var(--text-muted);">Aktivitas 01 &amp; 02</span>
+            </div>
+
+            <div class="callout callout-amber">
+                <strong>📌 Petunjuk Pengerjaan:</strong> Bacalah setiap aktivitas secara berurutan, diskusikan bersama kelompok, dan isi jawaban pada kolom yang disediakan.
+            </div>
+
+            <div class="activity-title">
+                <span>AKTIVITAS 01</span> MEMAHAMI MASALAH KONVERSI BILANGAN
+            </div>
+            <p style="font-size: 13px; margin-bottom: 8px;">
+                Komputer menggunakan representasi <strong>sistem bilangan biner (basis 2)</strong> yang hanya mengenal dua digit: <strong>0 dan 1</strong>.
+            </p>
+
+            <p style="font-size: 12.5px; font-weight: 600; color: var(--secondary);">Contoh Manual: Konversi Bilangan Desimal 13<sub>10</sub> ke Biner</p>
+            <div class="table-responsive">
+                <table class="interactive-table">
+                    <thead>
+                        <tr>
+                            <th class="center" style="width: 25%;">Bilangan Desimal</th>
+                            <th class="center" style="width: 25%;">Operasi Pembagian</th>
+                            <th class="center" style="width: 25%;">Hasil Bagi</th>
+                            <th class="center" style="width: 25%;">Sisa Pembagian (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="center font-bold">13</td><td class="center">13 ÷ 2</td><td class="center font-bold">6</td><td class="center font-bold" style="background:#fef08a;">1</td></tr>
+                        <tr><td class="center font-bold">6</td><td class="center">6 ÷ 2</td><td class="center font-bold">3</td><td class="center font-bold" style="background:#fef08a;">0</td></tr>
+                        <tr><td class="center font-bold">3</td><td class="center">3 ÷ 2</td><td class="center font-bold">1</td><td class="center font-bold" style="background:#fef08a;">1</td></tr>
+                        <tr><td class="center font-bold">1</td><td class="center">1 ÷ 2</td><td class="center font-bold">0</td><td class="center font-bold" style="background:#fef08a;">1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="callout callout-blue" style="margin-bottom: 12px;">
+                <strong>Hasil:</strong> Membaca sisa pembagian dari urutan paling bawah ke atas &rarr; <strong>13<sub>10</sub> = 1101<sub>2</sub></strong>
+            </div>
+
+            <div class="input-group">
+                <label>💡 Pertanyaan Pemantik: Bagaimana cara membuat komputer mencetak sisa pembagian dari urutan paling bawah ke atas secara otomatis?</label>
+                <textarea class="form-control" name="jawab_pemantik" placeholder="Tuliskan ide/hipotesis algoritma Anda di sini..."></textarea>
+            </div>
+
+            <div class="activity-title" style="margin-top: 18px;">
+                <span>AKTIVITAS 02</span> MENGENAL STRUKTUR REKURSI
+            </div>
+            <p style="font-size: 13px; margin-bottom: 8px;">
+                <strong>Rekursi</strong> adalah teknik di mana fungsi memanggil dirinya sendiri. Sebuah fungsi rekursif wajib memiliki 2 bagian penting:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
+                <div style="background: #f8fafc; border: 1px solid var(--border); padding: 12px; border-radius: 8px;">
+                    <strong style="color: #dc2626; font-size: 12.5px;">1. BASE CASE (Kondisi Berhenti)</strong>
+                    <div class="code-block" style="font-size: 11.5px; padding: 6px; margin: 4px 0 0 0;">
+                        <span class="kw">if</span> (n == <span class="num">0</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span>;<br>}
+                    </div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid var(--border); padding: 12px; border-radius: 8px;">
+                    <strong style="color: var(--primary); font-size: 12.5px;">2. RECURSIVE CASE (Pemanggilan)</strong>
+                    <div class="code-block" style="font-size: 11.5px; padding: 6px; margin: 4px 0 0 0;">
+                        <span class="comment">// Memanggil fungsi untuk data n/2</span><br>
+                        desimalKeBiner(n / <span class="num">2</span>);
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BAGIAN 2: EKSPLORASI & ANALISIS -->
+        <div class="sheet-card">
+            <div class="section-header">
+                <span class="section-badge">BAGIAN 2: EKSPLORASI &amp; TRACING REKURSI</span>
+                <span style="font-size: 11.5px; color: var(--text-muted);">Aktivitas 03 &amp; 04</span>
+            </div>
+
+            <div class="activity-title">
+                <span>AKTIVITAS 03</span> LATIHAN KONVERSI MANUAL DESIMAL: 10<sub>10</sub>
+            </div>
+            <p style="font-size: 12.5px;">Lakukan konversi bilangan desimal <strong>10<sub>10</sub></strong> ke biner dengan melengkapi tabel berikut:</p>
+
+            <div class="table-responsive">
+                <table class="interactive-table">
+                    <thead>
+                        <tr>
+                            <th class="center" style="width: 15%;">Langkah</th>
+                            <th class="center" style="width: 25%;">Bilangan Desimal</th>
+                            <th class="center" style="width: 30%;">Hasil Bagi (÷ 2)</th>
+                            <th class="center" style="width: 30%;">Sisa Pembagian (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="center font-bold">1</td>
+                            <td class="center font-bold">10</td>
+                            <td><input type="text" class="input-inline" name="act3_h1" placeholder="Hasil bagi..."></td>
+                            <td><input type="text" class="input-inline" name="act3_s1" placeholder="Sisa..."></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">2</td>
+                            <td><input type="text" class="input-inline" name="act3_b2" placeholder="Bilangan..."></td>
+                            <td><input type="text" class="input-inline" name="act3_h2" placeholder="Hasil bagi..."></td>
+                            <td><input type="text" class="input-inline" name="act3_s2" placeholder="Sisa..."></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">3</td>
+                            <td><input type="text" class="input-inline" name="act3_b3" placeholder="Bilangan..."></td>
+                            <td><input type="text" class="input-inline" name="act3_h3" placeholder="Hasil bagi..."></td>
+                            <td><input type="text" class="input-inline" name="act3_s3" placeholder="Sisa..."></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">4</td>
+                            <td><input type="text" class="input-inline" name="act3_b4" placeholder="Bilangan..."></td>
+                            <td><input type="text" class="input-inline" name="act3_h4" placeholder="Hasil bagi..."></td>
+                            <td><input type="text" class="input-inline" name="act3_s4" placeholder="Sisa..."></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 16px;">
+                <div class="input-group">
+                    <label>Urutan Sisa Pembagian (bawah ke atas):</label>
+                    <input type="text" class="form-control" name="act3_urutan" placeholder="Contoh: 1, 0, 1, 0">
+                </div>
+                <div class="input-group">
+                    <label>Hasil Akhir Konversi (Biner):</label>
+                    <input type="text" class="form-control" name="act3_hasil_biner" placeholder="10 (basis 10) = ... basis 2">
+                </div>
+            </div>
+
+            <div class="activity-title">
+                <span>AKTIVITAS 04</span> MENELUSURI PROSES REKURSI (TRACING STACK 13<sub>10</sub>)
+            </div>
+            
+            <p style="font-size: 12.5px; font-weight: 600;">A. Tahap Pemanggilan Maju (Winding / Push to Call Stack):</p>
+            <div class="table-responsive">
+                <table class="interactive-table">
+                    <thead>
+                        <tr>
+                            <th class="center" style="width: 15%;">Tahap</th>
+                            <th style="width: 40%;">Fungsi yang Dieksekusi</th>
+                            <th style="width: 45%;">Pemanggilan Selanjutnya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="center font-bold">1</td>
+                            <td><code>biner(13)</code></td>
+                            <td><input type="text" class="input-inline" name="trace_c1" placeholder="biner(...)"></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">2</td>
+                            <td><input type="text" class="input-inline" name="trace_f2" placeholder="biner(...)"></td>
+                            <td><input type="text" class="input-inline" name="trace_c2" placeholder="biner(...)"></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">3</td>
+                            <td><input type="text" class="input-inline" name="trace_f3" placeholder="biner(...)"></td>
+                            <td><input type="text" class="input-inline" name="trace_c3" placeholder="biner(...)"></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">4</td>
+                            <td><input type="text" class="input-inline" name="trace_f4" placeholder="biner(...)"></td>
+                            <td><strong>Berhenti (Base Case: n &le; 1)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p style="font-size: 12.5px; font-weight: 600; margin-top: 8px;">B. Urutan Kembali &amp; Pencetakan Nilai (Unwinding / Pop from Stack):</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px;">
+                <div class="input-group">
+                    <label><code>biner(1)</code> mencetak (1 % 2):</label>
+                    <input type="text" class="form-control" name="pop_1" placeholder="Nilai yang dicetak...">
+                </div>
+                <div class="input-group">
+                    <label><code>biner(3)</code> mencetak (3 % 2):</label>
+                    <input type="text" class="form-control" name="pop_2" placeholder="Nilai yang dicetak...">
+                </div>
+                <div class="input-group">
+                    <label><code>biner(6)</code> mencetak (6 % 2):</label>
+                    <input type="text" class="form-control" name="pop_3" placeholder="Nilai yang dicetak...">
+                </div>
+                <div class="input-group">
+                    <label><code>biner(13)</code> mencetak (13 % 2):</label>
+                    <input type="text" class="form-control" name="pop_4" placeholder="Nilai yang dicetak...">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Hasil Akhir Gabungan Output Layar:</label>
+                <input type="text" class="form-control" name="trace_final_output" placeholder="Output akhir...">
+            </div>
+        </div>
+
+        <!-- BAGIAN 3: ANALISIS KODE C++ -->
+        <div class="sheet-card">
+            <div class="section-header">
+                <span class="section-badge">BAGIAN 3: ANALISIS PROGRAM C++</span>
+                <span style="font-size: 11.5px; color: var(--text-muted);">Aktivitas 05 &amp; 06</span>
+            </div>
+
+            <div class="activity-title">
+                <span>AKTIVITAS 05</span> MEMBEDAH STRUKTUR PROGRAM C++
+            </div>
+
+            <div class="code-block">
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">void</span> <span class="kw">desimalKeBiner</span>(<span class="type">int</span> n) {
+    <span class="kw">if</span> (n &gt; <span class="num">1</span>) {
+        desimalKeBiner(n / <span class="num">2</span>); <span class="comment">// Panggilan rekursif</span>
+    }
+    cout &lt;&lt; n % <span class="num">2</span>; <span class="comment">// Cetak sisa setelah pemanggilan selesai</span>
+}
+
+<span class="type">int</span> <span class="kw">main</span>() {
+    <span class="type">int</span> bilangan;
+    cout &lt;&lt; <span class="str">"Masukkan bilangan desimal: "</span>;
+    cin &gt;&gt; bilangan;
+    cout &lt;&lt; <span class="str">"Bilangan biner: "</span>;
+    desimalKeBiner(bilangan);
+    return <span class="num">0</span>;
+}</div>
+
+            <p style="font-size: 12.5px; font-weight: 600; margin-top: 8px;">Tuliskan fungsi dan penjelasan masing-masing baris kode:</p>
+            <div class="table-responsive">
+                <table class="interactive-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 35%;">Bagian Kode</th>
+                            <th style="width: 65%;">Penjelasan Fungsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>void desimalKeBiner(int n)</code></td>
+                            <td><textarea class="form-control" name="code_exp_1" placeholder="Jelaskan fungsi header fungsi ini..."></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><code>if (n > 1)</code></td>
+                            <td><textarea class="form-control" name="code_exp_2" placeholder="Jelaskan kondisi ini..."></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><code>desimalKeBiner(n / 2);</code></td>
+                            <td><textarea class="form-control" name="code_exp_3" placeholder="Jelaskan proses rekursif ini..."></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><code>n % 2</code></td>
+                            <td><textarea class="form-control" name="code_exp_4" placeholder="Jelaskan operator modulus di sini..."></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><code>cout &lt;&lt; n % 2;</code><br><span style="font-size:10px; color:#64748b;">(setelah pemanggilan rekursi)</span></td>
+                            <td><textarea class="form-control" name="code_exp_5" placeholder="Mengapa diletakkan setelah fungsi rekursif dipanggil?"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="activity-title" style="margin-top: 16px;">
+                <span>AKTIVITAS 06</span> LENGKAPI PROGRAM RUMPANG
+            </div>
+            <p style="font-size: 12.5px;">Lengkapilah bagian kode rumpang berikut:</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 6px;">
+                <div class="input-group">
+                    <label>1. Parameter panggilan rekursif <code>desimalKeBiner(____)</code>:</label>
+                    <input type="text" class="form-control" name="fill_code_1" placeholder="Contoh: n / 2">
+                </div>
+                <div class="input-group">
+                    <label>2. Bagian pencetakan <code>cout &lt;&lt; ____</code>:</label>
+                    <input type="text" class="form-control" name="fill_code_2" placeholder="Contoh: n % 2">
+                </div>
+                <div class="input-group">
+                    <label>3. Pemanggilan di main <code>desimalKeBiner(____)</code>:</label>
+                    <input type="text" class="form-control" name="fill_code_3" placeholder="Contoh: bilangan">
+                </div>
+            </div>
+        </div>
+
+        <!-- BAGIAN 4: PRAKTIK PEMROGRAMAN -->
+        <div class="sheet-card">
+            <div class="section-header">
+                <span class="section-badge">BAGIAN 4: PRAKTIK PEMROGRAMAN C++</span>
+                <span style="font-size: 11.5px; color: var(--text-muted);">Aktivitas 07</span>
+            </div>
+
+            <div class="activity-title">
+                <span>AKTIVITAS 07</span> BUAT PROGRAM ANDA SECARA LENGKAP
+            </div>
+            <p style="font-size: 12.5px; margin-bottom: 8px;">Tuliskan program C++ lengkap untuk mengonversi bilangan desimal menjadi bilangan biner menggunakan metode rekursi:</p>
+
+            <textarea class="ide-editor" name="ide_source_code" placeholder="// Tuliskan program C++ lengkap Anda di sini...
+#include <iostream>
+using namespace std;
+
+void desimalKeBiner(int n) {
+    if (n > 1) {
+        desimalKeBiner(n / 2);
+    }
+    cout << n % 2;
+}
+
+int main() {
+    int bilangan;
+    cout << &quot;Masukkan bilangan desimal: &quot;;
+    cin >> bilangan;
+    cout << &quot;Bilangan biner: &quot;;
+    desimalKeBiner(bilangan);
+    cout << endl;
+    return 0;
+}"></textarea>
+
+            <div class="callout callout-blue" style="margin-top: 12px;">
+                <strong>📋 Checklist Program (Beri tanda centang setelah selesai):</strong>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px; margin-top: 6px;">
+                    <label class="check-container"><input type="checkbox" name="chk_1"> Program memiliki fungsi rekursif</label>
+                    <label class="check-container"><input type="checkbox" name="chk_2"> Program menerima input bilangan desimal</label>
+                    <label class="check-container"><input type="checkbox" name="chk_3"> Program menggunakan pembagian dengan 2</label>
+                    <label class="check-container"><input type="checkbox" name="chk_4"> Program menggunakan operator modulus %</label>
+                    <label class="check-container"><input type="checkbox" name="chk_5"> Program memiliki kondisi penghentian</label>
+                    <label class="check-container"><input type="checkbox" name="chk_6"> Program dapat menampilkan hasil biner</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- BAGIAN 5: PENGUJIAN & TANTANGAN -->
+        <div class="sheet-card">
+            <div class="section-header">
+                <span class="section-badge">BAGIAN 5: PENGUJIAN &amp; TANTANGAN</span>
+                <span style="font-size: 11.5px; color: var(--text-muted);">Aktivitas 08 &amp; Tantangan</span>
+            </div>
+
+            <div class="activity-title">
+                <span>AKTIVITAS 08</span> UJI COBA PROGRAM
+            </div>
+            <p style="font-size: 12.5px;">Jalankan program menggunakan data uji berikut dan lengkapi tabel:</p>
+
+            <div class="table-responsive">
+                <table class="interactive-table">
+                    <thead>
+                        <tr>
+                            <th class="center" style="width: 8%;">No</th>
+                            <th class="center" style="width: 22%;">Input Desimal</th>
+                            <th class="center" style="width: 28%;">Prediksi Manual</th>
+                            <th class="center" style="width: 28%;">Hasil Program</th>
+                            <th class="center" style="width: 14%;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="center font-bold">1</td>
+                            <td class="center font-bold">5</td>
+                            <td><input type="text" class="input-inline" name="test_pred_1" placeholder="Prediksi..."></td>
+                            <td><input type="text" class="input-inline" name="test_out_1" placeholder="Hasil..."></td>
+                            <td class="center"><label class="check-container" style="justify-content:center;"><input type="checkbox" name="test_val_1"> Sesuai</label></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">2</td>
+                            <td class="center font-bold">8</td>
+                            <td><input type="text" class="input-inline" name="test_pred_2" placeholder="Prediksi..."></td>
+                            <td><input type="text" class="input-inline" name="test_out_2" placeholder="Hasil..."></td>
+                            <td class="center"><label class="check-container" style="justify-content:center;"><input type="checkbox" name="test_val_2"> Sesuai</label></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">3</td>
+                            <td class="center font-bold">10</td>
+                            <td><input type="text" class="input-inline" name="test_pred_3" placeholder="Prediksi..."></td>
+                            <td><input type="text" class="input-inline" name="test_out_3" placeholder="Hasil..."></td>
+                            <td class="center"><label class="check-container" style="justify-content:center;"><input type="checkbox" name="test_val_3"> Sesuai</label></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">4</td>
+                            <td class="center font-bold">13</td>
+                            <td><input type="text" class="input-inline" name="test_pred_4" placeholder="Prediksi..."></td>
+                            <td><input type="text" class="input-inline" name="test_out_4" placeholder="Hasil..."></td>
+                            <td class="center"><label class="check-container" style="justify-content:center;"><input type="checkbox" name="test_val_4"> Sesuai</label></td>
+                        </tr>
+                        <tr>
+                            <td class="center font-bold">5</td>
+                            <td class="center font-bold">25</td>
+                            <td><input type="text" class="input-inline" name="test_pred_5" placeholder="Prediksi..."></td>
+                            <td><input type="text" class="input-inline" name="test_out_5" placeholder="Hasil..."></td>
+                            <td class="center"><label class="check-container" style="justify-content:center;"><input type="checkbox" name="test_val_5"> Sesuai</label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="activity-title" style="margin-top: 16px;">
+                <span style="background: #e11d48;">TANTANGAN</span> PENGEMBANGAN KODE
+            </div>
+            <p style="font-size: 12px; color: #475569; margin-bottom: 6px;">
+                <strong>Tantangan 01:</strong> Pastikan program dapat mengonversi bilangan 0.<br>
+                <strong>Tantangan 02:</strong> Buat tampilan terminal lebih informatif dengan banner.
+            </p>
+            <textarea class="form-control" style="font-family:'JetBrains Mono', monospace; font-size: 11.5px; min-height: 100px;" name="challenge_code" placeholder="// Tuliskan modifikasi kode tantangan Anda di sini..."></textarea>
+        </div>
+
+        <!-- BAGIAN 6: REFLEKSI, KESIMPULAN & PENILAIAN LENGKAP -->
+        <div class="sheet-card">
+            <div class="section-header">
+                <span class="section-badge">BAGIAN 6: REFLEKSI, KESIMPULAN &amp; PENILAIAN</span>
+                <span style="font-size: 11.5px; color: var(--text-muted);">Refleksi &amp; Penilaian Guru</span>
+            </div>
+
+            <!-- TABEL REFLEKSI LENGKAP 6 BUTIR PERTANYAAN SESUAI SPESIFIKASI -->
+            <p style="font-size: 12.5px; font-weight: 600; color: var(--primary-dark);">A. REFLEKSI BELAJAR (Pilih satu pada setiap baris):</p>
+            <div class="table-responsive">
+                <table class="interactive-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 55%;">Pernyataan Kompetensi</th>
+                            <th class="center" style="width: 15%;">Sangat Paham</th>
+                            <th class="center" style="width: 15%;">Paham</th>
+                            <th class="center" style="width: 15%;">Belum Paham</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. Saya memahami rekursi</td>
+                            <td class="radio-center"><input type="radio" name="ref_1" value="Sangat Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_1" value="Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_1" value="Belum Paham"></td>
+                        </tr>
+                        <tr>
+                            <td>2. Saya memahami base case</td>
+                            <td class="radio-center"><input type="radio" name="ref_2" value="Sangat Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_2" value="Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_2" value="Belum Paham"></td>
+                        </tr>
+                        <tr>
+                            <td>3. Saya memahami recursive case</td>
+                            <td class="radio-center"><input type="radio" name="ref_3" value="Sangat Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_3" value="Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_3" value="Belum Paham"></td>
+                        </tr>
+                        <tr>
+                            <td>4. Saya memahami n / 2</td>
+                            <td class="radio-center"><input type="radio" name="ref_4" value="Sangat Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_4" value="Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_4" value="Belum Paham"></td>
+                        </tr>
+                        <tr>
+                            <td>5. Saya memahami n % 2</td>
+                            <td class="radio-center"><input type="radio" name="ref_5" value="Sangat Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_5" value="Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_5" value="Belum Paham"></td>
+                        </tr>
+                        <tr>
+                            <td>6. Saya dapat membuat program</td>
+                            <td class="radio-center"><input type="radio" name="ref_6" value="Sangat Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_6" value="Paham"></td>
+                            <td class="radio-center"><input type="radio" name="ref_6" value="Belum Paham"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- HAL BARU & KENDALA -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+                <div class="input-group">
+                    <label>Hal Baru yang Saya Pelajari:</label>
+                    <textarea class="form-control" name="ref_hal_baru" placeholder="Tuliskan materi baru yang dipelajari..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Bagian yang Masih Sulit:</label>
+                    <textarea class="form-control" name="ref_kendala" placeholder="Tuliskan kendala yang dihadapi..."></textarea>
+                </div>
+            </div>
+
+            <!-- KESIMPULAN LENGKAP SESUAI DOKUMEN -->
+            <div style="background: #f8fafc; border: 1.5px solid var(--border); border-radius: 8px; padding: 14px; margin-top: 12px;">
+                <p style="font-size: 12.5px; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px;">B. KESIMPULAN (Lengkapilah pernyataan berikut):</p>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div class="input-group" style="margin: 0;">
+                        <label>1. Rekursi adalah teknik pemrograman ketika:</label>
+                        <input type="text" class="form-control" name="kesimpulan_1" placeholder="Lengkapi pengertian rekursi...">
+                    </div>
+                    <div class="input-group" style="margin: 0;">
+                        <label>2. Base case berfungsi untuk:</label>
+                        <input type="text" class="form-control" name="kesimpulan_2" placeholder="Lengkapi fungsi base case...">
+                    </div>
+                    <div class="input-group" style="margin: 0;">
+                        <label>3. Recursive case berfungsi untuk:</label>
+                        <input type="text" class="form-control" name="kesimpulan_3" placeholder="Lengkapi fungsi recursive case...">
+                    </div>
+                    <div class="input-group" style="margin: 0;">
+                        <label>4. Operator / pada program digunakan untuk:</label>
+                        <input type="text" class="form-control" name="kesimpulan_4" placeholder="Lengkapi fungsi operator /...">
+                    </div>
+                    <div class="input-group" style="margin: 0;">
+                        <label>5. Operator % digunakan untuk:</label>
+                        <input type="text" class="form-control" name="kesimpulan_5" placeholder="Lengkapi fungsi operator %...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- RUBRIK PENILAIAN GURU (LENGKAP SESUAI ASPEK SKOR LKPD) -->
+            <div style="margin-top: 16px;">
+                <p style="font-size: 12.5px; font-weight: 700; color: var(--secondary);">C. LEMBAR PENILAIAN GURU:</p>
+                <div class="table-responsive">
+                    <table class="interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Aspek Penilaian</th>
+                                <th class="center" style="width: 25%;">Skor Maksimal</th>
+                                <th class="center" style="width: 25%;">Nilai Perolehan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Pemahaman Konsep</td><td class="center">20</td><td class="center"><input type="text" class="input-inline center" name="nilai_1" placeholder="-"></td></tr>
+                            <tr><td>Analisis</td><td class="center">20</td><td class="center"><input type="text" class="input-inline center" name="nilai_2" placeholder="-"></td></tr>
+                            <tr><td>Algoritma</td><td class="center">15</td><td class="center"><input type="text" class="input-inline center" name="nilai_3" placeholder="-"></td></tr>
+                            <tr><td>Pemrograman</td><td class="center">25</td><td class="center"><input type="text" class="input-inline center" name="nilai_4" placeholder="-"></td></tr>
+                            <tr><td>Pengujian</td><td class="center">10</td><td class="center"><input type="text" class="input-inline center" name="nilai_5" placeholder="-"></td></tr>
+                            <tr><td>Kerapian</td><td class="center">10</td><td class="center"><input type="text" class="input-inline center" name="nilai_6" placeholder="-"></td></tr>
+                            <tr style="background: #e2e8f0; font-weight: bold;">
+                                <td>TOTAL SKOR</td><td class="center">100</td><td class="center"><input type="text" class="input-inline center font-bold" name="nilai_total" placeholder="0"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="input-group" style="margin-top: 6px;">
+                    <label>Catatan Guru / Feedback:</label>
+                    <textarea class="form-control" name="catatan_guru" placeholder="Catatan atau masukan dari guru..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL AKSI & PENGIRIMAN -->
+        <div class="control-panel no-print">
+            <div class="control-panel-title">
+                <span>📦 PANEL SIMPAN &amp; PENGIRIMAN TUGAS</span>
+                <span style="font-size: 11px; color: #94a3b8;">SMA Negeri 1 Muncar</span>
+            </div>
+
+            <div class="btn-grid">
+                <button type="button" class="btn btn-wa" onclick="sendToWhatsApp()">
+                    📲 KIRIM HASIL JAWABAN KE WA GURU (+6282143393357)
+                </button>
+                <button type="button" class="btn btn-primary" onclick="exportJSON()">
+                    📥 Unduh File (.json)
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-input').click()">
+                    📤 Buka File (.json)
+                </button>
+                <input type="file" id="file-input" style="display: none;" accept=".json" onchange="importJSON(event)">
+                <button type="button" class="btn btn-secondary" onclick="window.print()">
+                    🖨️ Cetak / PDF
+                </button>
+                <button type="button" class="btn btn-danger" onclick="resetForm()">
+                    🔄 Reset Isian
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT INTERAKTIF, AUTO-SAVE, WA SUBMISSION & EKSPOR -->
+    <script>
+        const STORAGE_KEY = 'LKPD_INFORMATIKA_REKURSI_DATA';
+        const GURU_WA_NUMBER = '6282143393357';
+
+        // Auto Save ke LocalStorage
+        function saveData() {
+            const formData = {};
+            const elements = document.querySelectorAll('#lkpd-form input, #lkpd-form textarea');
+            
+            elements.forEach(el => {
+                if (el.type === 'checkbox') {
+                    formData[el.name] = el.checked;
+                } else if (el.type === 'radio') {
+                    if (el.checked) {
+                        formData[el.name] = el.value;
+                    }
+                } else {
+                    formData[el.name] = el.value;
+                }
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+            
+            const status = document.getElementById('save-status');
+            status.innerHTML = '<span>●</span> <span>Tersimpan Otomatis</span>';
+            status.style.color = '#38bdf8';
+        }
+
+        // Load Data dari LocalStorage
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+
+            const formData = JSON.parse(saved);
+            const elements = document.querySelectorAll('#lkpd-form input, #lkpd-form textarea');
+
+            elements.forEach(el => {
+                if (formData[el.name] !== undefined) {
+                    if (el.type === 'checkbox') {
+                        el.checked = formData[el.name];
+                    } else if (el.type === 'radio') {
+                        if (el.value === formData[el.name]) {
+                            el.checked = true;
+                        }
+                    } else {
+                        el.value = formData[el.name];
+                    }
+                }
+            });
+        }
+
+        // Kirim Jawaban ke WhatsApp Guru
+        function sendToWhatsApp() {
+            saveData();
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) {
+                alert('Silakan lengkapi data LKPD terlebih dahulu.');
+                return;
+            }
+
+            const d = JSON.parse(saved);
+
+            if (!d.nama_siswa || !d.kelas || !d.no_absen) {
+                alert('Mohon lengkapi Nama Lengkap, Kelas, dan Nomor Absen di bagian atas!');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            let msg = `*PENGUMPULAN LKPD INFORMATIKA - FASE F*\n`;
+            msg += `*Materi: Rekursi (Desimal ke Biner C++)*\n`;
+            msg += `==================================\n`;
+            msg += `👤 *Nama Lengkap:* ${d.nama_siswa}\n`;
+            msg += `🏫 *Kelas:* ${d.kelas}\n`;
+            msg += `🔢 *No. Absen:* ${d.no_absen}\n`;
+            msg += `👥 *Kelompok:* ${d.kelompok || '-'}\n`;
+            msg += `==================================\n\n`;
+
+            msg += `📌 *1. AKTIVITAS 01 (Pertanyaan Pemantik):*\n${d.jawab_pemantik || '-'}\n\n`;
+
+            msg += `📌 *2. AKTIVITAS 03 (Konversi 10 Desimal ke Biner):*\n`;
+            msg += `• Urutan Sisa: ${d.act3_urutan || '-'}\n`;
+            msg += `• Hasil Biner: ${d.act3_hasil_biner || '-'}\n\n`;
+
+            msg += `📌 *3. AKTIVITAS 04 (Tracing Call Stack 13):*\n`;
+            msg += `• Forward: biner(13) -> ${d.trace_c1 || '-'} -> ${d.trace_c2 || '-'} -> ${d.trace_c3 || '-'}\n`;
+            msg += `• Unwinding: biner(1): ${d.pop_1 || '-'} | biner(3): ${d.pop_2 || '-'} | biner(6): ${d.pop_3 || '-'} | biner(13): ${d.pop_4 || '-'}\n`;
+            msg += `• Output Gabungan: ${d.trace_final_output || '-'}\n\n`;
+
+            msg += `📌 *4. AKTIVITAS 06 (Kode Rumpang):*\n`;
+            msg += `• Panggilan Rekursi: ${d.fill_code_1 || '-'}\n`;
+            msg += `• Cetak: ${d.fill_code_2 || '-'}\n`;
+            msg += `• Panggilan Main: ${d.fill_code_3 || '-'}\n\n`;
+
+            msg += `📌 *5. AKTIVITAS 07 (Kode C++ Siswa):*\n\`\`\`\n${d.ide_source_code || '// Belum diisi'}\n\`\`\`\n\n`;
+
+            msg += `📌 *6. AKTIVITAS 08 (Uji Coba):*\n`;
+            msg += `• Uji 5: Pred=${d.test_pred_1 || '-'}, Out=${d.test_out_1 || '-'}\n`;
+            msg += `• Uji 8: Pred=${d.test_pred_2 || '-'}, Out=${d.test_out_2 || '-'}\n`;
+            msg += `• Uji 10: Pred=${d.test_pred_3 || '-'}, Out=${d.test_out_3 || '-'}\n`;
+            msg += `• Uji 13: Pred=${d.test_pred_4 || '-'}, Out=${d.test_out_4 || '-'}\n`;
+            msg += `• Uji 25: Pred=${d.test_pred_5 || '-'}, Out=${d.test_out_5 || '-'}\n\n`;
+
+            msg += `📌 *7. REFLEKSI & KESIMPULAN:*\n`;
+            msg += `• Refleksi 1 (Rekursi): ${d.ref_1 || '-'}\n`;
+            msg += `• Refleksi 2 (Base Case): ${d.ref_2 || '-'}\n`;
+            msg += `• Refleksi 3 (Recursive Case): ${d.ref_3 || '-'}\n`;
+            msg += `• Hal baru: ${d.ref_hal_baru || '-'}\n`;
+            msg += `• Kendala: ${d.ref_kendala || '-'}\n`;
+            msg += `• Kesimpulan 1: ${d.kesimpulan_1 || '-'}\n`;
+            msg += `• Kesimpulan 2: ${d.kesimpulan_2 || '-'}\n\n`;
+            msg += `_Dikirim via LKPD Digital SMA Negeri 1 Muncar_`;
+
+            const waUrl = `https://api.whatsapp.com/send?phone=${GURU_WA_NUMBER}&text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        // Export Data JSON
+        function exportJSON() {
+            saveData();
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            
+            const parsed = JSON.parse(saved);
+            const nama = parsed.nama_siswa ? parsed.nama_siswa.replace(/[^a-zA-Z0-9]/g, '_') : 'Siswa';
+            const blob = new Blob([saved], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `LKPD_Rekursi_${nama}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Import Data JSON
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                    loadData();
+                    alert('Data berhasil dimuat kembali!');
+                } catch (err) {
+                    alert('Format file JSON tidak valid.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Reset Form
+        function resetForm() {
+            if (confirm('Kosongkan semua isian LKPD ini?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                const elements = document.querySelectorAll('#lkpd-form input, #lkpd-form textarea');
+                elements.forEach(el => {
+                    if (el.type === 'checkbox' || el.type === 'radio') {
+                        el.checked = false;
+                    } else {
+                        el.value = '';
+                    }
+                });
+                alert('Semua isian telah direset.');
+            }
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            document.querySelectorAll('#lkpd-form input, #lkpd-form textarea').forEach(el => {
+                el.addEventListener('input', saveData);
+                el.addEventListener('change', saveData);
+            });
+        });
+    </script>
+</body>
+</html>
