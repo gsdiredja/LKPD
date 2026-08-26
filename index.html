@@ -14,27 +14,29 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col">
 
-  <!-- Header / Hero Section -->
-  <header class="bg-gradient-to-br from-indigo-700 via-indigo-600 to-blue-600 text-white pt-8 pb-12 px-4 shadow-md rounded-b-3xl">
-    <div class="max-w-xl mx-auto text-center">
-      <span class="inline-block bg-white/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-3 backdrop-blur-sm">
+  <!-- Header / Hero Section (Warna Biru Donker / Navy) -->
+  <header class="bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white pt-10 pb-16 px-4 shadow-xl rounded-b-[2.5rem] border-b border-slate-800">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-block bg-blue-500/20 text-blue-200 border border-blue-400/30 text-xs font-semibold px-3.5 py-1 rounded-full uppercase tracking-wider mb-3 backdrop-blur-md">
         Tahun Ajaran 2026/2027
       </span>
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Portal LKPD Interaktif</h1>
-      <p class="text-indigo-100 text-sm sm:text-base mt-2">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
+        Portal LKPD Interaktif
+      </h1>
+      <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-xl mx-auto font-normal">
         Akses Lembar Kerja Peserta Didik, materi praktikum, dan lembar penugasan digital secara terpusat.
       </p>
 
       <!-- Search Box -->
-      <div class="mt-6 relative max-w-md mx-auto">
+      <div class="mt-6 relative max-w-lg mx-auto">
         <input
           type="text"
           id="searchInput"
           onkeyup="filterCards()"
-          placeholder="Cari materi, pertemuan, atau topik..."
-          class="w-full py-3 pl-11 pr-4 rounded-xl text-slate-800 bg-white shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm"
+          placeholder="Cari materi, topik, atau pertemuan..."
+          class="w-full py-3.5 pl-11 pr-4 rounded-xl text-slate-800 bg-white shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm placeholder:text-slate-400"
         />
         <svg class="w-5 h-5 absolute left-3.5 top-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 1114 0z"/>
@@ -43,41 +45,45 @@
     </div>
   </header>
 
-  <!-- Quick Info Banner -->
-  <main class="flex-1 max-w-xl mx-auto w-full px-4 -mt-6">
-    <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex items-center justify-between gap-3 text-xs sm:text-sm">
+  <!-- Container Utama -->
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-8">
+    
+    <!-- Quick Info Banner -->
+    <div class="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm flex items-center justify-between gap-3 text-xs sm:text-sm max-w-2xl mx-auto mb-8">
       <div class="flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="font-medium text-slate-600">Status Portal: <strong class="text-slate-800">Aktif</strong></span>
+        <span class="font-medium text-slate-600">Status Portal: <strong class="text-slate-900">Aktif</strong></span>
       </div>
-      <span class="text-slate-400">Total: <strong id="totalCount" class="text-indigo-600">4 LKPD</strong></span>
+      <span class="text-slate-500">Total Tersedia: <strong id="totalCount" class="text-blue-900 font-bold">4 LKPD</strong></span>
     </div>
 
-    <!-- Cards Container -->
-    <div id="cardGrid" class="mt-6 space-y-4 mb-8">
+    <!-- Grid Container: 1 Kolom (HP), 3 Kolom (Tablet md:), 4 Kolom (Laptop/Desktop lg:) -->
+    <div id="cardGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-10">
 
-      <!-- Item LKPD 1 -->
-      <div class="lkpd-card bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all">
-        <div class="flex items-start justify-between gap-2">
-          <span class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2.5 py-1 rounded-lg">
-            LKPD 1
-          </span>
-          <span class="text-xs text-slate-400 font-medium">Batas: 28 Agu 2026</span>
+      <!-- Card LKPD 1 -->
+      <div class="lkpd-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group hover:-translate-y-1">
+        <div>
+          <div class="flex items-start justify-between gap-2">
+            <span class="bg-blue-50 text-blue-900 border border-blue-100 text-xs font-bold px-2.5 py-1 rounded-lg">
+              LKPD 1
+            </span>
+            <span class="text-[11px] text-slate-400 font-medium">Batas: 28 Agu 2026</span>
+          </div>
+          
+          <h2 class="font-bold text-slate-900 text-base mt-3 group-hover:text-blue-950 transition-colors title-search">
+            ALGORITMA REKURSI – Program C++
+          </h2>
+          <p class="text-xs text-slate-500 mt-2 line-clamp-3 leading-relaxed desc-search">
+            Pemahaman konsep dasar rekursi, fungsi rekursif, base case, dan pembuatan program perhitungan faktorial serta deret Fibonacci.
+          </p>
         </div>
-        
-        <h2 class="font-bold text-slate-800 text-base sm:text-lg mt-2.5 title-search">
-          ALGORITMA REKURSI - Program C++
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-500 mt-1 line-clamp-2 desc-search">
-          REKURSI: KONVERSI DESIMAL KE BINER DENGAN C++
-        </p>
 
-        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2">
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2">
           <a
-            href="https://lkpd.kodi.web.id/lkpd_1.html"
+            href="https://forms.gle/sample-link-1"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex-1 text-center bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition-all shadow-sm shadow-indigo-200 flex items-center justify-center gap-1.5"
+            class="flex-1 text-center bg-slate-900 hover:bg-blue-950 active:scale-[0.98] text-white text-xs sm:text-sm font-semibold py-2.5 px-3 rounded-xl transition shadow-md shadow-slate-900/10 flex items-center justify-center gap-1.5"
           >
             <span>Buka LKPD</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,38 +92,40 @@
           </a>
           <a
             href="#"
-            title="Download PDF"
-            class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition"
+            title="Download Panduan PDF"
+            class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
           </a>
         </div>
       </div>
 
-      <!-- Item LKPD 2 -->
-      <div class="lkpd-card bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all">
-        <div class="flex items-start justify-between gap-2">
-          <span class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2.5 py-1 rounded-lg">
-            LKPD 2
-          </span>
-          <span class="text-xs text-slate-400 font-medium">Batas: 04 Sep 2026</span>
+      <!-- Card LKPD 2 -->
+      <div class="lkpd-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group hover:-translate-y-1">
+        <div>
+          <div class="flex items-start justify-between gap-2">
+            <span class="bg-blue-50 text-blue-900 border border-blue-100 text-xs font-bold px-2.5 py-1 rounded-lg">
+              LKPD 2
+            </span>
+            <span class="text-[11px] text-slate-400 font-medium">Batas: 04 Sep 2026</span>
+          </div>
+          
+          <h2 class="font-bold text-slate-900 text-base mt-3 group-hover:text-blue-950 transition-colors title-search">
+            ALGORITMA SEARCHING – Linier & Binary
+          </h2>
+          <p class="text-xs text-slate-500 mt-2 line-clamp-3 leading-relaxed desc-search">
+            Analisis kompleksitas waktu dan implementasi algoritma pencarian linear search dan binary search pada data array terurut.
+          </p>
         </div>
-        
-        <h2 class="font-bold text-slate-800 text-base sm:text-lg mt-2.5 title-search">
-          BELUM TERSEDIA
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-500 mt-1 line-clamp-2 desc-search">
-         
-        </p>
 
-        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2">
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2">
           <a
-            href="#
+            href="https://forms.gle/sample-link-2"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex-1 text-center bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition-all shadow-sm shadow-indigo-200 flex items-center justify-center gap-1.5"
+            class="flex-1 text-center bg-slate-900 hover:bg-blue-950 active:scale-[0.98] text-white text-xs sm:text-sm font-semibold py-2.5 px-3 rounded-xl transition shadow-md shadow-slate-900/10 flex items-center justify-center gap-1.5"
           >
             <span>Buka LKPD</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,38 +134,40 @@
           </a>
           <a
             href="#"
-            title="Download PDF"
-            class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition"
+            title="Download Panduan PDF"
+            class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
           </a>
         </div>
       </div>
 
-       <!-- Item LKPD 2 -->
-      <div class="lkpd-card bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all">
-        <div class="flex items-start justify-between gap-2">
-          <span class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2.5 py-1 rounded-lg">
-            LKPD 2
-          </span>
-          <span class="text-xs text-slate-400 font-medium">Batas: 04 Sep 2026</span>
+      <!-- Card LKPD 3 -->
+      <div class="lkpd-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group hover:-translate-y-1">
+        <div>
+          <div class="flex items-start justify-between gap-2">
+            <span class="bg-blue-50 text-blue-900 border border-blue-100 text-xs font-bold px-2.5 py-1 rounded-lg">
+              LKPD 3
+            </span>
+            <span class="text-[11px] text-slate-400 font-medium">Batas: 11 Sep 2026</span>
+          </div>
+          
+          <h2 class="font-bold text-slate-900 text-base mt-3 group-hover:text-blue-950 transition-colors title-search">
+            SORTING – Bubble & Insertion Sort
+          </h2>
+          <p class="text-xs text-slate-500 mt-2 line-clamp-3 leading-relaxed desc-search">
+            Praktikum pengurutan data ascending dan descending dengan teknik pertukaran dan penyisipan data pada larik satu dimensi.
+          </p>
         </div>
-        
-        <h2 class="font-bold text-slate-800 text-base sm:text-lg mt-2.5 title-search">
-          BELUM TERSEDIA
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-500 mt-1 line-clamp-2 desc-search">
-         
-        </p>
 
-        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2">
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2">
           <a
-            href="#
+            href="https://forms.gle/sample-link-3"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex-1 text-center bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition-all shadow-sm shadow-indigo-200 flex items-center justify-center gap-1.5"
+            class="flex-1 text-center bg-slate-900 hover:bg-blue-950 active:scale-[0.98] text-white text-xs sm:text-sm font-semibold py-2.5 px-3 rounded-xl transition shadow-md shadow-slate-900/10 flex items-center justify-center gap-1.5"
           >
             <span>Buka LKPD</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,10 +176,52 @@
           </a>
           <a
             href="#"
-            title="Download PDF"
-            class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition"
+            title="Download Panduan PDF"
+            class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card LKPD 4 -->
+      <div class="lkpd-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group hover:-translate-y-1">
+        <div>
+          <div class="flex items-start justify-between gap-2">
+            <span class="bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold px-2.5 py-1 rounded-lg">
+              Proyek Akhir
+            </span>
+            <span class="text-[11px] text-slate-400 font-medium">Batas: 25 Sep 2026</span>
+          </div>
+          
+          <h2 class="font-bold text-slate-900 text-base mt-3 group-hover:text-blue-950 transition-colors title-search">
+            STUDI KASUS – Sistem Manajemen Nilai
+          </h2>
+          <p class="text-xs text-slate-500 mt-2 line-clamp-3 leading-relaxed desc-search">
+            Penerapan algoritma pencarian, pengurutan, dan struktur data struct dalam pembuatan program aplikasi konsol sederhana.
+          </p>
+        </div>
+
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2">
+          <a
+            href="https://forms.gle/sample-link-4"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex-1 text-center bg-slate-900 hover:bg-blue-950 active:scale-[0.98] text-white text-xs sm:text-sm font-semibold py-2.5 px-3 rounded-xl transition shadow-md shadow-slate-900/10 flex items-center justify-center gap-1.5"
+          >
+            <span>Buka LKPD</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </a>
+          <a
+            href="#"
+            title="Download Panduan PDF"
+            class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
           </a>
@@ -178,38 +230,39 @@
 
     </div>
 
-    <!-- Empty State (Saat pencarian tidak ditemukan) -->
-    <div id="noResult" class="hidden text-center py-10">
-      <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 mb-2">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <!-- Empty State -->
+    <div id="noResult" class="hidden text-center py-12">
+      <div class="w-14 h-14 bg-slate-200 rounded-full flex items-center justify-center mx-auto text-slate-400 mb-3">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
       </div>
-      <p class="text-sm font-semibold text-slate-700">LKPD tidak ditemukan</p>
-      <p class="text-xs text-slate-400 mt-0.5">Coba gunakan kata kunci pencarian yang lain.</p>
+      <p class="text-base font-semibold text-slate-700">LKPD tidak ditemukan</p>
+      <p class="text-xs text-slate-400 mt-1">Coba gunakan kata kunci pencarian yang lain.</p>
     </div>
 
-    <!-- Petunjuk Singkat -->
-    <div class="bg-indigo-50/60 border border-indigo-100 rounded-2xl p-4 text-xs text-indigo-950 mb-8">
-      <p class="font-bold mb-1 flex items-center gap-1.5 text-indigo-900">
-        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <!-- Informasi / Petunjuk -->
+    <div class="max-w-3xl mx-auto bg-slate-900 text-slate-200 rounded-2xl p-5 text-xs shadow-md mb-12 border border-slate-800">
+      <p class="font-bold mb-2 flex items-center gap-2 text-white text-sm">
+        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Petunjuk Pengerjaan
+        Petunjuk Pengerjaan & Pengumpulan
       </p>
-      <ul class="list-disc list-inside space-y-1 text-slate-600 ml-1">
-        <li>Pastikan login menggunakan akun email siswa (@sekolah.sch.id / Google).</li>
-        <li>Kirimkan jawaban sebelum batas waktu yang tercantum pada setiap kartu.</li>
+      <ul class="list-disc list-inside space-y-1 text-slate-300 ml-1">
+        <li>Gunakan akun email resmi sekolah saat membuka lembar penugasan digital.</li>
+        <li>Pastikan file program atau laporan yang diunggah sesuai format (.cpp / .pdf).</li>
+        <li>Kumpulkan sebelum batas waktu yang tertera pada masing-masing LKPD.</li>
       </ul>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200/80 py-4 px-4 text-center text-xs text-slate-400">
-    <p>© 2026 Tim Pengajar • Portal Pembelajaran Mandiri</p>
+  <footer class="bg-slate-900 border-t border-slate-800 py-6 px-4 text-center text-xs text-slate-400 mt-auto">
+    <p>© 2026 Tim Pengajar Informatika • Portal Pembelajaran Mandiri</p>
   </footer>
 
-  <!-- Search Filter Script -->
+  <!-- Live Search Script -->
   <script>
     function filterCards() {
       const input = document.getElementById('searchInput').value.toLowerCase();
@@ -221,10 +274,12 @@
         const desc = card.querySelector('.desc-search').textContent.toLowerCase();
 
         if (title.includes(input) || desc.includes(input)) {
-          card.style.display = 'block';
+          card.classList.remove('hidden');
+          card.classList.add('flex');
           visibleCount++;
         } else {
-          card.style.display = 'none';
+          card.classList.remove('flex');
+          card.classList.add('hidden');
         }
       });
 
